@@ -237,6 +237,37 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=520111041129076&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<!-- Meta Pixel Custom Events -->
+<script>
+// Track ViewContent on page load
+window.addEventListener('load', function() {
+  fbq('track', 'ViewContent', {
+    value: 297,
+    currency: 'BRL',
+    content_name: 'Código de Vendas Course',
+    content_category: 'education'
+  });
+});
+
+// Track click on main CTA button
+document.addEventListener('DOMContentLoaded', function() {
+  var ctaButtons = document.querySelectorAll('.btn-yellow');
+  ctaButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      fbq('track', 'AddToCart', {
+        value: 97,
+        currency: 'BRL',
+        content_name: 'Código de Vendas - Assessoria',
+        content_type: 'course',
+        content_id: 'codigovendas_assessoria'
+      });
+      // Optional: Log to console for debugging
+      console.log('Pixel event tracked: AddToCart');
+    });
+  });
+});
+</script>
+<!-- End Meta Pixel Custom Events -->
 <body>
 
 <!-- STICKY CTA -->
