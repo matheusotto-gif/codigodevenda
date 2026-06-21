@@ -1,0 +1,32 @@
+name: Patch AddToCart
+on:
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Apply AddToCart patch
+        run: |
+          python3 - <<'PYEOF'
+          with open('index.html', 'r', encoding='utf-8') as f:
+              content = f.read()
+          old = "btn.addEventListener('click', function(e) {\n      fbq('track', 'AddToCart', {"
+          new_code = "btn.addEventListener('click', function(e) {\n      e.preventDefault();\n      fbq('track', 'AddToCart', {"
+          content = content.replace(old, new_code, 1)
+          old2 = "console.log('Pixel event tracked: AddToCart');\n    });"
+          new2 = "console.log('Pixel event tracked: AddToCart');\n      var href = btn.getAttribute('href') || (btn.closest('a') ? btn.closest('a').href : null);\n      setTimeout(function() {\n        if (href) window.location.href = href;\n      }, 300);\n    });"
+          content = content.replace(old2, new2, 1)
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(content)
+          print('Done')
+          PYEOF
+      - name: Commit and push
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add index.html
+          git diff --cached --quiet || git commit -m "fix: AddToCart pixel com e.preventDefault + setTimeout 300ms"
+          git push
