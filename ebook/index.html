@@ -99,13 +99,15 @@ src="https://www.facebook.com/tr?id=620111041129076&ev=PageView&noscript=1"
   }
 
   .cover-img{
-    width:180px;
-    max-width:56vw;
-    border-radius:10px;
+    width:210px;
+    max-width:62vw;
     margin-bottom:28px;
-    box-shadow:0 20px 50px -12px rgba(0,0,0,0.6), 0 0 0 1px var(--line);
     position:relative;
     z-index:1;
+    mix-blend-mode:screen;
+    -webkit-mask-image:radial-gradient(ellipse 65% 70% at 50% 45%, black 55%, transparent 100%);
+    mask-image:radial-gradient(ellipse 65% 70% at 50% 45%, black 55%, transparent 100%);
+    opacity:0.94;
   }
 
   .hero h1{
@@ -326,7 +328,7 @@ src="https://www.facebook.com/tr?id=620111041129076&ev=PageView&noscript=1"
 <!-- HERO -->
 <div class="hero">
   <img src="/ebook/capa-ebook.jpg" alt="Capa do ebook Como Vender Muito no Mercado Livre Todo Santo Dia" class="cover-img">
-  <h1 class="gold-text">COMO VENDER MUITO<br>NO <span style="color:var(--yellow-ml); -webkit-text-fill-color:var(--yellow-ml);">MERCADO LIVRE</span><br>TODO SANTO DIA</h1>
+  <h1 style="color:var(--white);">COMO VENDER MUITO<br>NO <span style="color:var(--yellow-ml);">MERCADO LIVRE</span><br>TODO SANTO DIA</h1>
   <p class="sub">O passo a passo prático para você <strong>começar do zero</strong> e vender todo santo dia no Mercado Livre — o mesmo método que uso há mais de 5 anos.</p>
   <a href="https://pay.kiwify.com.br/Jsn2bOZ" class="cta-btn">
     QUERO COMEÇAR AGORA
