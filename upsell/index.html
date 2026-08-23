@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oferta especial — Código de Vendas</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --black: #0a0a0a;
+    --near-black: #121212;
+    --gold: #d4af37;
+    --gold-bright: #f0c14b;
+    --yellow-ml: #fff200;
+    --white: #f5f5f5;
+    --gray: #8a8a8a;
+    --line: rgba(212,175,55,0.18);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+  }
+
+  h1,h2,h3{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.5px;
+    line-height:1.05;
+    font-weight:400;
+  }
+
+  .yellow{color:var(--yellow-ml);}
+
+  .container{max-width:640px;margin:0 auto;padding:0 24px;}
+
+  /* HEADER STRIP */
+  .header-strip{
+    background:linear-gradient(180deg, rgba(212,175,55,0.1), transparent);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+    text-align:center;
+  }
+  .header-strip span{
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+  }
+
+  /* HERO */
+  .hero{
+    padding:56px 0 32px;
+    text-align:center;
+  }
+
+  .badge{
+    display:inline-block;
+    background:rgba(212,175,55,0.1);
+    border:1px solid var(--line);
+    color:var(--gold);
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:700;
+    padding:8px 18px;
+    border-radius:100px;
+    margin-bottom:24px;
+  }
+
+  .hero h1{
+    font-size:clamp(34px, 8vw, 52px);
+    margin-bottom:18px;
+  }
+
+  .hero .sub{
+    font-size:clamp(15px,4vw,18px);
+    color:#c9c9c9;
+    max-width:520px;
+    margin:0 auto;
+  }
+  .hero .sub strong{color:var(--white);font-weight:700;}
+
+  /* VALUE JUMP CARD */
+  .jump-card{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:36px 0;
+    flex-wrap:wrap;
+  }
+  .jump-item{
+    text-align:center;
+  }
+  .jump-item .label{
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--gray);
+    margin-bottom:6px;
+  }
+  .jump-item .value{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:28px;
+    color:var(--white);
+  }
+  .jump-item.highlight .value{color:var(--gold);}
+  .jump-arrow{
+    font-size:22px;
+    color:var(--gold);
+  }
+
+  /* WHAT YOU GET */
+  section.offer-details{
+    padding:32px 0;
+  }
+  .section-label{
+    font-size:12px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:14px;
+    display:block;
+    text-align:center;
+  }
+  section.offer-details h2{
+    font-size:clamp(26px, 6vw, 34px);
+    text-align:center;
+    margin-bottom:28px;
+  }
+
+  .benefits{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .benefits li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-size:15px;
+    color:#e2e2e2;
+  }
+  .benefits li .check{
+    color:var(--gold);
+    font-weight:800;
+    flex-shrink:0;
+    font-size:16px;
+    line-height:1.5;
+  }
+
+  /* OFFER CARD */
+  .offer-card{
+    max-width:480px;
+    margin:40px auto 0;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:36px 28px;
+    background:linear-gradient(180deg, rgba(212,175,55,0.06), rgba(0,0,0,0.2));
+    text-align:center;
+  }
+
+  .price-block{margin:18px 0 6px;}
+  .price-old{
+    font-size:15px;
+    color:var(--gray);
+    text-decoration:line-through;
+    margin-bottom:2px;
+  }
+  .price-new{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:56px;
+    color:var(--white);
+    line-height:1;
+  }
+  .price-new .cents{font-size:24px;vertical-align:top;position:relative;top:4px;}
+  .price-note{font-size:13px;color:var(--gray);margin-bottom:26px;}
+
+  .cta-btn{
+    display:block;
+    width:100%;
+    background:linear-gradient(180deg,#f0c14b, #c99a2e);
+    color:#0a0a0a;
+    font-weight:800;
+    font-size:17px;
+    padding:17px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:0 10px 30px -8px rgba(212,175,55,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    border:none;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+  }
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -6px rgba(212,175,55,0.6);}
+
+  .decline-link{
+    display:block;
+    margin-top:18px;
+    font-size:14px;
+    color:var(--gray);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none;
+    border:none;
+    font-family:'Inter',sans-serif;
+  }
+  .decline-link:hover{color:#aaa;}
+
+  .guarantee-note{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--gray);
+    max-width:420px;
+    margin:20px auto 0;
+  }
+
+  footer{
+    text-align:center;
+    padding:40px 24px 56px;
+    color:var(--gray);
+    font-size:13px;
+  }
+
+  @media (max-width:600px){
+    .offer-card{padding:28px 20px;}
+    .jump-card{gap:10px;}
+    .jump-arrow{font-size:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header-strip">
+  <span>✅ Compra do ebook confirmada</span>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <span class="badge">Oferta exclusiva — só aparece agora</span>
+    <h1>Você acabou de dar o<br>primeiro passo.<br><span class="yellow">Quer ir até o fim?</span></h1>
+    <p class="sub">O ebook te dá o <strong>mapa</strong>. O Código de Vendas te dá a <strong>execução completa</strong> — passo a passo, com tudo que uso na minha própria operação há mais de 5 anos.</p>
+
+    <div class="jump-card">
+      <div class="jump-item">
+        <div class="label">Você tem</div>
+        <div class="value">Ebook</div>
+      </div>
+      <div class="jump-arrow">→</div>
+      <div class="jump-item highlight">
+        <div class="label">Leve também</div>
+        <div class="value">Curso Completo</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="offer-details">
+  <div class="container">
+    <span class="section-label">O que você leva a mais</span>
+    <h2>Código de Vendas — curso completo</h2>
+    <ul class="benefits">
+      <li><span class="check">✓</span> Todas as aulas em vídeo, muito além do que cabe num ebook</li>
+      <li><span class="check">✓</span> Estratégias avançadas de precificação e catálogo que não entraram no ebook</li>
+      <li><span class="check">✓</span> Acesso à comunidade de alunos e atualizações constantes</li>
+      <li><span class="check">✓</span> Suporte direto para tirar dúvidas da sua operação</li>
+      <li><span class="check">✓</span> O método completo que já ajudou dezenas de pessoas a saírem do zero</li>
+    </ul>
+
+    <div class="offer-card">
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--white); letter-spacing:1px;">CÓDIGO DE VENDAS — CURSO COMPLETO</div>
+      <div class="price-block">
+        <div class="price-new">R$67<span class="cents">,00</span></div>
+      </div>
+      <div class="price-note">Oferta única · Válida só nesta página · Pagamento único</div>
+
+      <div style="text-align:center" id="kiwify-upsell-1zbCsA8" data-upsell-url="" data-downsell-url="">
+        <button id="kiwify-upsell-trigger-1zbCsA8" class="cta-btn">Sim, quero o curso completo por R$67!</button>
+        <div id="kiwify-upsell-cancel-trigger-1zbCsA8" class="decline-link">Não, prefiro continuar só com o ebook</div>
+      </div>
+    </div>
+
+    <p class="guarantee-note">Ao clicar em "Sim", a cobrança é feita automaticamente no mesmo cartão ou Pix já usado — sem precisar preencher dados de novo.</p>
+  </div>
+</section>
+
+<footer>
+  Código de Vendas · Matheus Muniz
+</footer>
+
+<script src="https://snippets.kiwify.com/upsell/upsell.min.js"></script>
+</body>
+</html>
