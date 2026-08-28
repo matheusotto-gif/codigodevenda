@@ -1,309 +1,268 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oferta especial — Código de Venda</title>
-<meta name="robots" content="noindex, nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta especial — Código de Venda</title>
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-gold: #d4af37;
+            --accent-yellow: #fff200;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+            from { --gradient-angle: 0deg; }
+            to { --gradient-angle: 360deg; }
+        }
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+        @property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
 
-<style>
-  :root{
-    --black: #0a0a0a;
-    --near-black: #121212;
-    --gold: #d4af37;
-    --gold-bright: #f0c14b;
-    --yellow-ml: #fff200;
-    --white: #f5f5f5;
-    --gray: #8a8a8a;
-    --line: rgba(212,175,55,0.18);
-  }
+        .animate-fade-up { animation: fade-in-up 0.8s ease-out forwards; }
+        .font-bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px; }
+        .font-inter { font-family: 'Inter', sans-serif; }
 
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+        .shiny-cta {
+            --gradient-angle: 0deg;
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(#000000, #000000) padding-box,
+              conic-gradient(from var(--gradient-angle), transparent 0%, var(--accent-gold) 5%, var(--accent-gold) 15%, var(--accent-gold) 30%, transparent 40%, transparent 100%) border-box;
+            border: 2px solid transparent;
+            cursor: pointer;
+            isolation: isolate;
+            animation: border-spin 2.5s linear infinite;
+            display: block;
+            width: 100%;
+        }
 
-  body{
-    background:var(--black);
-    color:var(--white);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    min-height:100svh;
-  }
+        .stars-1 { box-shadow: 234px 124px #fff, 654px 345px #fff, 876px 12px #fff, 1200px 800px #fff, 400px 1500px #fff, 1800px 200px #fff, 100px 1000px #fff, 900px 1900px #fff, 500px 600px #fff, 1400px 100px #fff, 300px 400px #fff, 1600px 1200px #fff; }
+        .stars-2 { box-shadow: 123px 456px #fff, 789px 234px #fff, 456px 890px #fff, 1100px 300px #fff, 200px 1200px #fff, 1500px 500px #fff, 600px 1700px #fff, 1300px 900px #fff; }
 
-  h1,h2,h3{
-    font-family:'Bebas Neue',sans-serif;
-    letter-spacing:0.5px;
-    line-height:1.05;
-    font-weight:400;
-  }
+        .gradient-blur {
+            position: fixed;
+            z-index: 40;
+            inset: 0 0 auto 0;
+            height: 100px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
+            backdrop-filter: blur(8px);
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
 
-  .yellow{color:var(--yellow-ml);}
+        .selection-gold::selection { background: var(--accent-gold); color: black; }
 
-  .container{max-width:640px;margin:0 auto;padding:0 24px;}
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+            color: transparent;
+        }
 
-  /* HEADER STRIP */
-  .header-strip{
-    background:linear-gradient(180deg, rgba(212,175,55,0.1), transparent);
-    border-bottom:1px solid var(--line);
-    padding:14px 24px;
-    text-align:center;
-  }
-  .header-strip span{
-    font-size:12px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--gold);
-    font-weight:700;
-  }
-
-  /* HERO */
-  .hero{
-    padding:56px 0 32px;
-    text-align:center;
-  }
-
-  .badge{
-    display:inline-block;
-    background:rgba(212,175,55,0.1);
-    border:1px solid var(--line);
-    color:var(--gold);
-    font-size:12px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    font-weight:700;
-    padding:8px 18px;
-    border-radius:100px;
-    margin-bottom:24px;
-  }
-
-  .hero h1{
-    font-size:clamp(34px, 8vw, 52px);
-    margin-bottom:18px;
-  }
-
-  .hero .sub{
-    font-size:clamp(15px,4vw,18px);
-    color:#c9c9c9;
-    max-width:520px;
-    margin:0 auto;
-  }
-  .hero .sub strong{color:var(--white);font-weight:700;}
-
-  /* VALUE JUMP CARD */
-  .jump-card{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    margin:36px 0;
-    flex-wrap:wrap;
-  }
-  .jump-item{
-    text-align:center;
-  }
-  .jump-item .label{
-    font-size:11px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--gray);
-    margin-bottom:6px;
-  }
-  .jump-item .value{
-    font-family:'Bebas Neue',sans-serif;
-    font-size:28px;
-    color:var(--white);
-  }
-  .jump-item.highlight .value{color:var(--gold);}
-  .jump-arrow{
-    font-size:22px;
-    color:var(--gold);
-  }
-
-  /* WHAT YOU GET */
-  section.offer-details{
-    padding:32px 0;
-  }
-  .section-label{
-    font-size:12px;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color:var(--gold);
-    font-weight:600;
-    margin-bottom:14px;
-    display:block;
-    text-align:center;
-  }
-  section.offer-details h2{
-    font-size:clamp(26px, 6vw, 34px);
-    text-align:center;
-    margin-bottom:28px;
-  }
-
-  .benefits{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-  .benefits li{
-    display:flex;
-    align-items:flex-start;
-    gap:12px;
-    font-size:15px;
-    color:#e2e2e2;
-  }
-  .benefits li .check{
-    color:var(--gold);
-    font-weight:800;
-    flex-shrink:0;
-    font-size:16px;
-    line-height:1.5;
-  }
-
-  /* OFFER CARD */
-  .offer-card{
-    max-width:480px;
-    margin:40px auto 0;
-    border:1px solid var(--line);
-    border-radius:20px;
-    padding:36px 28px;
-    background:linear-gradient(180deg, rgba(212,175,55,0.06), rgba(0,0,0,0.2));
-    text-align:center;
-  }
-
-  .price-block{margin:18px 0 6px;}
-  .price-old{
-    font-size:15px;
-    color:var(--gray);
-    text-decoration:line-through;
-    margin-bottom:2px;
-  }
-  .price-new{
-    font-family:'Bebas Neue',sans-serif;
-    font-size:56px;
-    color:var(--white);
-    line-height:1;
-  }
-  .price-new .cents{font-size:24px;vertical-align:top;position:relative;top:4px;}
-  .price-note{font-size:13px;color:var(--gray);margin-bottom:26px;}
-
-  .cta-btn{
-    display:block;
-    width:100%;
-    background:linear-gradient(180deg,#f0c14b, #c99a2e);
-    color:#0a0a0a;
-    font-weight:800;
-    font-size:17px;
-    padding:17px 24px;
-    border-radius:10px;
-    text-decoration:none;
-    box-shadow:0 10px 30px -8px rgba(212,175,55,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
-    transition:transform 0.15s ease, box-shadow 0.15s ease;
-    border:none;
-    cursor:pointer;
-    font-family:'Inter',sans-serif;
-  }
-  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -6px rgba(212,175,55,0.6);}
-
-  .decline-link{
-    display:block;
-    margin-top:18px;
-    font-size:14px;
-    color:var(--gray);
-    text-decoration:underline;
-    cursor:pointer;
-    background:none;
-    border:none;
-    font-family:'Inter',sans-serif;
-  }
-  .decline-link:hover{color:#aaa;}
-
-  .guarantee-note{
-    text-align:center;
-    font-size:12.5px;
-    color:var(--gray);
-    max-width:420px;
-    margin:20px auto 0;
-  }
-
-  footer{
-    text-align:center;
-    padding:40px 24px 56px;
-    color:var(--gray);
-    font-size:13px;
-  }
-
-  @media (max-width:600px){
-    .offer-card{padding:28px 20px;}
-    .jump-card{gap:10px;}
-    .jump-arrow{font-size:18px;}
-  }
-</style>
+        .decline-link {
+            display: block;
+            margin-top: 18px;
+            font-size: 14px;
+            color: #71717a;
+            text-decoration: underline;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            width: 100%;
+        }
+        .decline-link:hover { color: #a1a1aa; }
+    </style>
 </head>
-<body>
+<body class="selection-gold">
+    <div class="min-h-screen bg-black text-white font-inter relative overflow-x-hidden">
 
-<div class="header-strip">
-  <span>✅ Parabéns, sua compra foi confirmada</span>
-</div>
+        <!-- Global Background -->
+        <div class="fixed inset-0 z-0 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#1a1505] to-black"></div>
+            <div class="absolute top-0 left-0 w-[1px] h-[1px] bg-transparent stars-1 animate-[animStar_50s_linear_infinite]"></div>
+            <div class="absolute top-0 left-0 w-[2px] h-[2px] bg-transparent stars-2 animate-[animStar_80s_linear_infinite]"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-500/5 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]"></div>
+        </div>
 
-<div class="hero">
-  <div class="container">
-    <span class="badge">ATENÇÃO, ESSA OFERTA SÓ APARECE AGORA</span>
-    <h1>Maravilha, você acabou<br>de dar o seu<br><span class="yellow">primeiro passo.</span></h1>
-    <p class="sub">Antes de começar... Preciso ser sincero com você.</p>
+        <div class="gradient-blur"></div>
 
-    <div class="jump-card">
-      <div class="jump-item">
-        <div class="label">Você tem</div>
-        <div class="value">Ebook</div>
-      </div>
-      <div class="jump-arrow">→</div>
-      <div class="jump-item highlight">
-        <div class="label">Leve também</div>
-        <div class="value">Curso Completo</div>
-      </div>
+        <!-- Navbar -->
+        <header class="fixed top-0 left-0 w-full z-50 pt-6 px-4">
+            <nav class="max-w-3xl mx-auto flex items-center justify-between bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 shadow-2xl">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-[#d4af37] rounded-sm rotate-45"></div>
+                    <span class="text-sm font-bold font-bebas tracking-wide leading-tight">COMO VENDER NO ML<br>TODO SANTO DIA</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#d4af37]/80">Matheus Muniz</span>
+            </nav>
+        </header>
+
+        <main class="relative z-10">
+            <!-- Hero -->
+            <section class="min-h-[60vh] flex flex-col items-center justify-center pt-32 pb-16 px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-up" style="animation-delay: 0.1s;">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-300 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#fff200]"></span>
+                        </span>
+                        <span class="text-xs font-medium text-yellow-100/90 tracking-wide">
+                            Compra confirmada
+                        </span>
+                        <iconify-icon icon="lucide:check" class="w-3 h-3 text-yellow-300"></iconify-icon>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl font-bebas tracking-tight leading-[1.05] mb-8 animate-fade-up" style="animation-delay: 0.2s;">
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40">Maravilha, você acabou</span>
+                        <span class="block text-[#fff200]">de dar o primeiro passo.</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-zinc-400 max-w-xl mx-auto leading-relaxed animate-fade-up" style="animation-delay: 0.3s;">
+                        Antes de começar... Preciso ser sincero com você.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sincero com você -->
+            <section class="py-20 px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-4 block">Antes de começarmos</span>
+                    <p class="text-lg text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+                        O ebook te dá o mapa. O Código de Venda te dá a <strong class="text-white">execução completa!</strong> Estratégias que não tinha como documentar todas em um ebook, mas sim em vídeo-aulas gravadas, na qual utilizo na minha operação há mais de 5 anos.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Analogia Show/VIP - Banner Destaque -->
+            <div class="w-full bg-gradient-to-r from-[#d4af37] to-[#f0c14b] py-16 px-6 my-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <div class="flex justify-center gap-1 text-black/70 mb-6">
+                        <iconify-icon icon="lucide:ticket" class="w-6 h-6"></iconify-icon>
+                        <iconify-icon icon="lucide:arrow-right" class="w-6 h-6"></iconify-icon>
+                        <iconify-icon icon="lucide:crown" class="w-6 h-6"></iconify-icon>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-bold text-black font-inter leading-tight mb-4">
+                        Pensa assim: o ebook é o seu ingresso pro show.
+                    </h3>
+                    <p class="text-lg md:text-xl text-black/80 font-medium max-w-xl mx-auto">
+                        Você já está dentro, já vai viver a experiência. O <strong>Código de Venda</strong> é o <span class="underline decoration-2">ACESSO VIP</span>. Mais perto ainda do palco, da atração principal, do seu sonho.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cards de Benefícios -->
+            <section class="py-24 px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl md:text-4xl font-bebas tracking-tight mb-4">
+                            O que muda no <span class="text-[#fff200]">acesso VIP</span>
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="group relative overflow-hidden p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]">
+                                <iconify-icon icon="lucide:video" class="w-6 h-6"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Vídeo-aulas completas</h3>
+                            <p class="text-sm text-zinc-400">Muito além do que cabe num ebook. Passo a passo em vídeo, do jeito que fica mais fácil de aplicar, você assiste no seu tempo.</p>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #d4af37, transparent 70%);"></div>
+                        </div>
+
+                        <div class="group relative overflow-hidden p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]">
+                                <iconify-icon icon="lucide:zap" class="w-6 h-6"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Estratégias avançadas</h3>
+                            <p class="text-sm text-zinc-400">Diversas táticas ainda mais avançadas que uso na minha própria operação, direto ao ponto, sem enrolação.</p>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #d4af37, transparent 70%);"></div>
+                        </div>
+
+                        <div class="group relative overflow-hidden p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]">
+                                <iconify-icon icon="lucide:trending-up" class="w-6 h-6"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Resultado comprovado</h3>
+                            <p class="text-sm text-zinc-400">O mesmo caminho que já ajudou centenas de pessoas a saírem do zero no Mercado Livre.</p>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #d4af37, transparent 70%);"></div>
+                        </div>
+
+                        <div class="group relative overflow-hidden p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]">
+                                <iconify-icon icon="lucide:refresh-cw" class="w-6 h-6"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Atualizações constantes</h3>
+                            <p class="text-sm text-zinc-400">O conteúdo evolui junto com a plataforma, você sempre acompanha o que está funcionando agora.</p>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #d4af37, transparent 70%);"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Oferta -->
+            <section class="py-24 px-6">
+                <div class="max-w-lg mx-auto">
+                    <div class="relative p-10 border border-[#d4af37]/40 bg-zinc-900/40 shadow-[0_0_40px_rgba(212,175,55,0.12)] rounded-2xl text-center">
+                        <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-3">Código de Venda — Curso Completo</div>
+
+                        <div class="flex items-end justify-center gap-1 mb-2">
+                            <span class="text-6xl font-bebas text-white">R$67</span>
+                            <span class="text-2xl font-bebas text-white/70 mb-1">,00</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 mb-8">Oferta única · Válida só nesta página · Pagamento único</p>
+
+                        <div id="kiwify-upsell-1zbCsA8" data-upsell-url="" data-downsell-url="">
+                            <button id="kiwify-upsell-trigger-1zbCsA8" class="shiny-cta">
+                                <span class="relative z-10 flex items-center justify-center gap-2 text-white font-semibold text-base">
+                                    Sim, quero o curso completo por R$67!
+                                    <iconify-icon icon="lucide:arrow-right" class="w-4 h-4"></iconify-icon>
+                                </span>
+                            </button>
+                            <div id="kiwify-upsell-cancel-trigger-1zbCsA8" class="decline-link">Não, prefiro continuar só com o ebook</div>
+                        </div>
+
+                        <p class="text-xs text-zinc-500 mt-6 max-w-sm mx-auto">
+                            Ao clicar em "Sim", a cobrança é feita automaticamente no mesmo cartão ou Pix já usado, sem precisar preencher dados de novo.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-black border-t border-zinc-900 pt-16 pb-8 relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-6 text-center relative z-10 mb-8">
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <div class="w-4 h-4 bg-[#d4af37] rounded-sm rotate-45"></div>
+                    <span class="text-lg font-bold font-bebas tracking-wide">CÓDIGO DE VENDA</span>
+                </div>
+                <p class="text-zinc-500 text-sm">Matheus Muniz</p>
+            </div>
+
+            <div class="flex justify-center items-center py-6 opacity-10 pointer-events-none">
+                <h1 class="text-[13vw] leading-none font-bold font-bebas tracking-tighter text-stroke select-none">CÓDIGO DE VENDA</h1>
+            </div>
+        </footer>
     </div>
-
-    <p class="sub" style="margin-top:28px;">O ebook te dá o <strong>mapa</strong>. O Código de Venda te dá a <strong>execução completa!</strong> Estratégias que não tinha como documentar todas em um ebook, mas sim em vídeo-aulas gravadas, na qual utilizo na minha operação há mais de 5 anos.</p>
-  </div>
-</div>
-
-<section class="offer-details">
-  <div class="container">
-    <span class="section-label">O que você leva a mais?</span>
-    <h2>Código de Venda — curso completo</h2>
-    <ul class="benefits">
-      <li><span class="check">✓</span> Todas as aulas em vídeo, muito além do que cabe num ebook</li>
-      <li><span class="check">✓</span> Diversas estratégias avançadas</li>
-      <li><span class="check">✓</span> Atualizações constantes</li>
-      <li><span class="check">✓</span> Acesso vitalício</li>
-      <li><span class="check">✓</span> O método completo que já ajudou dezenas de pessoas a saírem do zero</li>
-    </ul>
-
-    <div class="offer-card">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--white); letter-spacing:1px;">CÓDIGO DE VENDA — CURSO COMPLETO</div>
-      <div class="price-block">
-        <div class="price-new">R$67<span class="cents">,00</span></div>
-      </div>
-      <div class="price-note">Oferta única · Válida só nesta página · Pagamento único</div>
-
-      <div style="text-align:center" id="kiwify-upsell-1zbCsA8" data-upsell-url="" data-downsell-url="">
-        <button id="kiwify-upsell-trigger-1zbCsA8" class="cta-btn">Sim, quero o curso completo por R$67!</button>
-        <div id="kiwify-upsell-cancel-trigger-1zbCsA8" class="decline-link">Não, prefiro continuar só com o ebook</div>
-      </div>
-    </div>
-
-    <p class="guarantee-note">Ao clicar em "Sim", a cobrança é feita automaticamente no mesmo cartão ou Pix já usado — sem precisar preencher dados de novo.</p>
-  </div>
-</section>
-
-<footer>
-  Código de Venda · Matheus Muniz
-</footer>
 
 <script src="https://snippets.kiwify.com/upsell/upsell.min.js"></script>
 </body>
