@@ -262,26 +262,39 @@
                         Quem já esteve<br>onde você está.<br><span class="text-[#fff200]">E saiu!</span>
                     </h2>
 
-                    <div class="overflow-x-auto flex gap-3 mb-10 pb-2 max-w-2xl mx-auto" style="scroll-snap-type: x mandatory; scrollbar-width: none;">
-                        <div class="relative flex-none w-40 rounded-lg overflow-hidden border border-zinc-800" style="scroll-snap-align: start;">
-                            <img src="/foto-uber.jpg" alt="Motorista de aplicativo" class="w-full aspect-square object-cover">
-                            <div class="absolute bottom-0 inset-x-0 bg-black/70 text-xs text-center py-1.5">🚗 Motorista de aplicativo</div>
+                    <div class="max-w-sm mx-auto mb-10">
+                        <div id="trajCarousel" class="relative rounded-xl overflow-hidden border border-zinc-800" style="touch-action: pan-y;">
+                            <div id="trajSlides" class="flex transition-transform duration-400" style="transition-timing-function: ease;">
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-uber.jpg" alt="Motorista de aplicativo" class="w-full aspect-square object-cover">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🚗 Motorista de aplicativo</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-futebol.jpg" alt="Tentando ser jogador" class="w-full aspect-square object-cover">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">⚽ Tentando ser jogador</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-pedreiro.jpg" alt="Bico de pedreiro" class="w-full aspect-square object-cover">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🧱 Fazendo bico de pedreiro</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-aeroporto.jpg" alt="CLT no aeroporto" class="w-full aspect-square object-cover">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">✈️ CLT no aeroporto</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-dubai.jpg" alt="Dubai depois do método" class="w-full aspect-square object-cover">
+                                    <div class="absolute bottom-0 inset-x-0 bg-[#d4af37] text-black text-sm text-center py-2 font-semibold">🌍 Dubai — depois do método</div>
+                                </div>
+                            </div>
+                            <button onclick="trajGo(trajCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">‹</button>
+                            <button onclick="trajGo(trajCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">›</button>
                         </div>
-                        <div class="relative flex-none w-40 rounded-lg overflow-hidden border border-zinc-800" style="scroll-snap-align: start;">
-                            <img src="/foto-futebol.jpg" alt="Tentando ser jogador" class="w-full aspect-square object-cover">
-                            <div class="absolute bottom-0 inset-x-0 bg-black/70 text-xs text-center py-1.5">⚽ Tentando ser jogador</div>
-                        </div>
-                        <div class="relative flex-none w-40 rounded-lg overflow-hidden border border-zinc-800" style="scroll-snap-align: start;">
-                            <img src="/foto-pedreiro.jpg" alt="Bico de pedreiro" class="w-full aspect-square object-cover">
-                            <div class="absolute bottom-0 inset-x-0 bg-black/70 text-xs text-center py-1.5">🧱 Fazendo bico de pedreiro</div>
-                        </div>
-                        <div class="relative flex-none w-40 rounded-lg overflow-hidden border border-zinc-800" style="scroll-snap-align: start;">
-                            <img src="/foto-aeroporto.jpg" alt="CLT no aeroporto" class="w-full aspect-square object-cover">
-                            <div class="absolute bottom-0 inset-x-0 bg-black/70 text-xs text-center py-1.5">✈️ CLT no aeroporto</div>
-                        </div>
-                        <div class="relative flex-none w-40 rounded-lg overflow-hidden border border-[#d4af37]" style="scroll-snap-align: start;">
-                            <img src="/foto-dubai.jpg" alt="Dubai depois do método" class="w-full aspect-square object-cover">
-                            <div class="absolute bottom-0 inset-x-0 bg-[#d4af37] text-black text-xs text-center py-1.5 font-semibold">🌍 Dubai — depois do método</div>
+                        <div id="trajDots" class="flex justify-center gap-2 mt-4">
+                            <button onclick="trajGo(0)" class="traj-dot w-2 h-2 rounded-full bg-[#d4af37]"></button>
+                            <button onclick="trajGo(1)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(2)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(3)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(4)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
                         </div>
                     </div>
 
@@ -341,5 +354,33 @@
             </div>
         </footer>
     </div>
+<script>
+(function(){
+  window.trajCur = 0;
+  var total = 5;
+  window.trajGo = function(n){
+    trajCur = ((n % total) + total) % total;
+    var slides = document.getElementById('trajSlides');
+    if(!slides) return;
+    slides.style.transform = 'translateX(-' + (trajCur*100) + '%)';
+    document.querySelectorAll('.traj-dot').forEach(function(d,i){
+      d.classList.toggle('bg-[#d4af37]', i===trajCur);
+      d.classList.toggle('bg-zinc-700', i!==trajCur);
+    });
+  };
+  window.addEventListener('DOMContentLoaded', function(){
+    var c = document.getElementById('trajCarousel');
+    if(!c) return;
+    var startX = 0, moved = false;
+    c.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; moved=false; }, {passive:true});
+    c.addEventListener('touchmove', function(){ moved=true; }, {passive:true});
+    c.addEventListener('touchend', function(e){
+      if(!moved) return;
+      var dx = startX - e.changedTouches[0].clientX;
+      if(Math.abs(dx) > 40) trajGo(trajCur + (dx>0?1:-1));
+    }, {passive:true});
+  });
+})();
+</script>
 </body>
 </html>
