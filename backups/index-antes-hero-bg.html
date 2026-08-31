@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construa uma operação no Mercado Livre que paga todos os dias — Código de Venda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent-gold: #d4af37; --accent-yellow: #fff200; }
+        @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes border-spin { from { --gradient-angle: 0deg; } to { --gradient-angle: 360deg; } }
+        @keyframes animStar { from { transform: translateY(0px); } to { transform: translateY(-2000px); } }
+        @property --gradient-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+        .animate-fade-up { animation: fade-in-up 0.8s ease-out forwards; }
+        .font-bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.5px; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .shiny-cta {
+            --gradient-angle: 0deg; position: relative; overflow: hidden; border-radius: 9999px;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(#000000, #000000) padding-box,
+              conic-gradient(from var(--gradient-angle), transparent 0%, var(--accent-gold) 5%, var(--accent-gold) 15%, var(--accent-gold) 30%, transparent 40%, transparent 100%) border-box;
+            border: 2px solid transparent; cursor: pointer; isolation: isolate;
+            animation: border-spin 2.5s linear infinite; display: block; width: 100%; text-align: center;
+        }
+        .stars-1 { box-shadow: 234px 124px #fff, 654px 345px #fff, 876px 12px #fff, 1200px 800px #fff, 400px 1500px #fff, 1800px 200px #fff, 100px 1000px #fff, 900px 1900px #fff, 500px 600px #fff, 1400px 100px #fff, 300px 400px #fff, 1600px 1200px #fff; }
+        .stars-2 { box-shadow: 123px 456px #fff, 789px 234px #fff, 456px 890px #fff, 1100px 300px #fff, 200px 1200px #fff, 1500px 500px #fff, 600px 1700px #fff, 1300px 900px #fff; }
+        .gradient-blur { position: fixed; z-index: 40; inset: 0 0 auto 0; height: 100px; pointer-events: none; background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent); backdrop-filter: blur(8px); mask-image: linear-gradient(to bottom, black, transparent); }
+        .selection-gold::selection { background: var(--accent-gold); color: black; }
+        .text-stroke { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08); color: transparent; }
+        .yellow-text { color: var(--accent-yellow); }
+        .price-strike { text-decoration: line-through; opacity: 0.5; }
+    </style>
+</head>
+<body class="selection-gold">
+    <div class="min-h-screen bg-black text-white font-inter relative overflow-x-hidden">
+
+        <div class="fixed inset-0 z-0 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#1a1505] to-black"></div>
+            <div class="absolute top-0 left-0 w-[1px] h-[1px] bg-transparent stars-1 animate-[animStar_50s_linear_infinite]"></div>
+            <div class="absolute top-0 left-0 w-[2px] h-[2px] bg-transparent stars-2 animate-[animStar_80s_linear_infinite]"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-500/5 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]"></div>
+        </div>
+        <div class="gradient-blur"></div>
+
+        <header class="fixed top-0 left-0 w-full z-50 pt-6 px-4">
+            <nav class="max-w-3xl mx-auto flex items-center justify-between bg-black/60 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 shadow-2xl">
+                <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 bg-[#d4af37] rounded-sm rotate-45"></div>
+                    <span class="text-sm font-bold font-bebas tracking-wide leading-tight">CÓDIGO DE VENDA</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-[#d4af37]/80">Matheus Muniz</span>
+            </nav>
+        </header>
+
+        <main class="relative z-10">
+            <!-- HERO -->
+            <section class="min-h-[85vh] flex flex-col items-center justify-center pt-32 pb-16 px-6">
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="text-center md:text-left">
+                        <img src="/assets/logo-ml.png" alt="Mercado Livre" class="w-24 mx-auto md:mx-0 mb-6 animate-fade-up" style="animation-delay: 0.1s;">
+                        <h1 class="text-4xl md:text-6xl font-bebas tracking-tight leading-[1.1] mb-6 animate-fade-up" style="animation-delay: 0.2s;">
+                            <span class="block text-white">Construa uma operação no</span>
+                            <span class="block text-[#fff200]">MERCADO LIVRE</span>
+                            <span class="block text-white">que paga todos os dias!</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-zinc-400 leading-relaxed mb-4 animate-fade-up" style="animation-delay: 0.3s;">
+                            Sem chefe. Sem horário fixo.<br>De qualquer lugar do mundo!
+                        </p>
+                        <p class="text-base text-zinc-300 leading-relaxed mb-10 animate-fade-up" style="animation-delay: 0.4s;">
+                            Se você está inconformado de chegar no fim do mês no zero, de não ter controle sobre o seu tempo e de sentir que o dinheiro nunca é suficiente... O que você vai ver aqui foi feito para você. Esse era o atalho que gostaria de ter tido quando ainda dependia de salário.
+                        </p>
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto md:mx-0">
+                            <span class="relative z-10 flex items-center justify-center gap-2 text-white font-semibold text-base">
+                                QUERO LUCRAR NO MERCADO LIVRE
+                                <iconify-icon icon="lucide:arrow-right" class="w-4 h-4"></iconify-icon>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex justify-center animate-fade-up" style="animation-delay: 0.3s;">
+                        <img src="/assets/hero-photo.png" alt="Matheus Muniz — Especialista Mercado Livre" class="w-full max-w-sm">
+                    </div>
+                </div>
+            </section>
+
+            <!-- DOR -->
+            <section class="py-20 px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-5xl font-bebas tracking-tight mb-6 leading-[1.1]">
+                        Você trabalha o mês inteiro, paga as contas e <span class="text-[#fff200]">não sobra nada.</span><br>Todo mês a mesma história.
+                    </h2>
+                    <p class="text-lg text-zinc-300 mb-6">
+                        <span class="line-through decoration-2 decoration-zinc-500">Isso não é falta de esforço.</span><br>É falta do caminho certo.
+                    </p>
+                    <p class="text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-8">
+                        A maioria das pessoas que querem mudar de vida já tentaram de tudo: freela, indicação, bico aqui e ali… Porém, sempre acabam estagnadas no mesmo lugar. Isso porque nenhuma dessas opções tem sistema. O Mercado Livre tem! É a maior plataforma de vendas da América Latina, com milhões de compradores todo dia esperando por produtos que alguém como você poderia estar vendendo agora.
+                    </p>
+                    <div class="p-6 border border-[#d4af37]/30 bg-zinc-900/40 rounded-xl max-w-2xl mx-auto mb-8">
+                        <p class="text-zinc-200">💡 Um dos meus alunos vendeu pela primeira vez em menos de 1 semana. Outro saiu do emprego e pagou as dívidas em 3 meses. A diferença entre eles e quem continua estagnado não é talento — é método. E é exatamente isso que o <strong class="text-white">Código de Venda</strong> entrega.</p>
+                    </div>
+                    <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
+                        <span class="relative z-10 text-white font-semibold text-base">QUERO CONHECER O MÉTODO</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- BENEFÍCIOS -->
+            <section class="py-24 px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl md:text-4xl font-bebas tracking-tight mb-4">
+                            Você vai ter o que nunca teve<br><span class="text-[#fff200]">trabalhando pros outros</span>
+                        </h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]"><iconify-icon icon="lucide:target" class="w-6 h-6"></iconify-icon></div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Dinheiro todos os dias</h3>
+                            <p class="text-sm text-zinc-400">Chega de esperar o dia do pagamento. Com o método certo, o ML deposita na sua conta todo dia — incluindo fins de semana e feriados.</p>
+                        </div>
+                        <div class="p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]"><iconify-icon icon="lucide:trending-up" class="w-6 h-6"></iconify-icon></div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Seu tempo de volta</h3>
+                            <p class="text-sm text-zinc-400">Chega de perder horas preso no ônibus, no engarrafamento, entrar às 8h e sair às 17h. Monte uma operação sólida e lucrativa que vende até enquanto você dorme.</p>
+                        </div>
+                        <div class="p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]"><iconify-icon icon="lucide:trophy" class="w-6 h-6"></iconify-icon></div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Trabalhe de qualquer lugar</h3>
+                            <p class="text-sm text-zinc-400">Computador na mão e internet — é tudo que você precisa. Gerencie sua conta enquanto viaja, ou de onde estiver com a família.</p>
+                        </div>
+                        <div class="p-8 border border-white/10 bg-black hover:border-[#d4af37]/40 transition-all rounded-xl">
+                            <div class="mb-4 inline-flex p-3 rounded-lg bg-white/5 border border-white/10 text-[#d4af37]"><iconify-icon icon="lucide:rocket" class="w-6 h-6"></iconify-icon></div>
+                            <h3 class="text-lg font-semibold text-white mb-2">Sem depender de ninguém</h3>
+                            <p class="text-sm text-zinc-400">Sem chefe, sem aprovação, sem teto salarial. Você decide quanto quer ganhar — e o método te mostra como chegar lá.</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-12">
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
+                            <span class="relative z-10 text-white font-semibold text-base">QUERO ESSE MÉTODO AGORA</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BÔNUS -->
+            <section class="py-24 px-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-4 text-center">
+                        <h2 class="text-3xl md:text-4xl font-bebas tracking-tight mb-4">
+                            3 super bônus que <span class="text-white">aceleram</span><br><span class="text-[#fff200]">seus primeiros resultados</span>
+                        </h2>
+                        <p class="text-zinc-400">As mesmas ferramentas que eu utilizo na minha conta, você recebe junto com o curso.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+                        <div class="p-6 border border-[#d4af37]/30 bg-zinc-900/40 rounded-xl text-center overflow-hidden">
+                            <img src="/assets/bonus-termometro.jpg" alt="Bônus Termômetro" class="w-full max-w-[180px] mx-auto mb-3 rounded-lg" loading="lazy">
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] block mb-3">Bônus 1</span>
+                            <h3 class="text-2xl font-bebas mb-3">Termômetro</h3>
+                            <p class="text-sm text-zinc-400">A reputação no Mercado Livre define tudo — quem aparece primeiro, quem vende mais, quem o algoritmo favorece. Nesse bônus você aprende como ativar e blindar o seu termômetro no menor tempo possível, do jeito certo, sem tomar punição.</p>
+                        </div>
+                        <div class="p-6 border border-[#d4af37]/30 bg-zinc-900/40 rounded-xl text-center overflow-hidden">
+                            <img src="/assets/bonus-produto.jpg" alt="Bônus Produto Validado" class="w-full max-w-[180px] mx-auto mb-3 rounded-lg" loading="lazy">
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] block mb-3">Bônus 2</span>
+                            <h3 class="text-2xl font-bebas mb-3">Produto Validado</h3>
+                            <p class="text-sm text-zinc-400">O mesmo método que uso para escolher produtos nas minhas contas. Descubra em segundos o que vende — sem gastar 1 real errado.</p>
+                        </div>
+                        <div class="p-6 border border-[#d4af37]/30 bg-zinc-900/40 rounded-xl text-center overflow-hidden">
+                            <img src="/assets/bonus-precificacao.jpg" alt="Bônus Precificação" class="w-full max-w-[180px] mx-auto mb-3 rounded-lg" loading="lazy">
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#d4af37] block mb-3">Bônus 3</span>
+                            <h3 class="text-2xl font-bebas mb-3">Precificação Lucrativa</h3>
+                            <p class="text-sm text-zinc-400">Descubra como precificar seus produtos de forma altamente lucrativa e ainda competitiva dentro da plataforma — para vender mais e ganhar mais ao mesmo tempo.</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-12">
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
+                            <span class="relative z-10 text-white font-semibold text-base">QUERO TUDO POR APENAS R$67</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROVA SOCIAL -->
+            <section class="py-24 px-6">
+                <div class="max-w-5xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bebas tracking-tight text-center mb-16">
+                        Pessoas comuns que<br><span class="text-[#fff200]">decidiram mudar…</span><br>E mudaram!
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-8 border border-white/10 bg-black rounded-xl">
+                            <div class="text-[#fff200] mb-3">★★★★★</div>
+                            <p class="text-sm text-zinc-300 mb-4 italic">"Fiz minha primeira venda em 5 dias. Hoje já tenho 3 produtos rodando e faturei R$8.200 no último mês. Minha família não acreditou quando mostrei."</p>
+                            <div class="text-white font-semibold text-sm">Carlos M. — SP</div>
+                            <div class="text-zinc-500 text-xs">Saiu do emprego 4 meses depois</div>
+                        </div>
+                        <div class="p-8 border border-white/10 bg-black rounded-xl">
+                            <div class="text-[#fff200] mb-3">★★★★★</div>
+                            <p class="text-sm text-zinc-300 mb-4 italic">"Trabalhava como CLT e vivia no limite do cartão. Em 3 meses aplicando o Código de Venda larguei o emprego. Hoje faturo mais que meu ex-chefe."</p>
+                            <div class="text-white font-semibold text-sm">Fernanda L. — RJ</div>
+                            <div class="text-zinc-500 text-xs">Pagou as dívidas em 3 meses</div>
+                        </div>
+                        <div class="p-8 border border-white/10 bg-black rounded-xl">
+                            <div class="text-[#fff200] mb-3">★★★★★</div>
+                            <p class="text-sm text-zinc-300 mb-4 italic">"Tentei de tudo antes: dropshipping, afiliados, NADA funcionou. O ML com o método do Matheus foi diferente. Em 30 dias, R$12.000 de faturamento."</p>
+                            <div class="text-white font-semibold text-sm">Ricardo T. — MG</div>
+                            <div class="text-zinc-500 text-xs">Primeira venda feita. Sem experiência anterior.</div>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-xs uppercase tracking-widest text-zinc-500 mt-16 mb-6">📲 Prints reais do grupo de alunos</p>
+                    <div class="flex overflow-x-auto gap-4 pb-4 px-1" style="scroll-snap-type: x mandatory; scrollbar-width: none;">
+                        <img src="/assets/prova1.jpg" alt="Prova real aluno 1" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                        <img src="/assets/prova2.jpg" alt="Prova real aluno 2" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                        <img src="/assets/prova3.jpg" alt="Prova real aluno 3" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                        <img src="/assets/prova4.jpg" alt="Prova real aluno 4" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                        <img src="/assets/prova5.jpg" alt="Prova real aluno 5" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                        <img src="/assets/prova6.jpg" alt="Prova real aluno 6" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                    </div>
+
+                    <div class="text-center mt-12">
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
+                            <span class="relative z-10 text-white font-semibold text-base">QUERO SER O PRÓXIMO</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PREÇO -->
+            <section class="py-24 px-6">
+                <div class="max-w-lg mx-auto">
+                    <h2 class="text-2xl md:text-3xl font-bebas text-center mb-10 leading-tight">
+                        Menos que um jantar fora.<br><span class="text-[#fff200]">Mais que qualquer emprego já te deu!</span>
+                    </h2>
+                    <div class="relative p-10 border border-[#d4af37]/40 bg-zinc-900/40 shadow-[0_0_40px_rgba(212,175,55,0.12)] rounded-2xl text-center">
+                        <div class="text-sm text-zinc-500 price-strike mb-1">De R$ 297,00</div>
+                        <div class="flex items-end justify-center gap-1 mb-2">
+                            <span class="text-6xl font-bebas text-white">R$67</span>
+                        </div>
+                        <p class="text-xs text-zinc-500 mb-8">ou 10x de R$ 8,05 sem juros</p>
+                        <ul class="text-left text-sm text-zinc-300 space-y-3 mb-8">
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Método completo que me faz faturar R$1M/mês</li>
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Bônus 1: Termômetro</li>
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Bônus 2: Produtos Validados</li>
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Bônus 3: Precificação</li>
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Mesmo método usado por +100 alunos com resultado</li>
+                            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" class="w-4 h-4 text-[#d4af37] mt-1 flex-shrink-0"></iconify-icon>Garantia de 7 dias ou seu dinheiro de volta</li>
+                        </ul>
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta">
+                            <span class="relative z-10 text-white font-semibold text-base">QUERO COMEÇAR AGORA</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOBRE MATHEUS -->
+            <section class="py-24 px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl md:text-5xl font-bebas tracking-tight mb-10 leading-[1.1]">
+                        Quem já esteve<br>onde você está.<br><span class="text-[#fff200]">E saiu!</span>
+                    </h2>
+
+                    <div class="max-w-sm mx-auto mb-10">
+                        <div id="trajCarousel" class="relative rounded-xl overflow-hidden border border-zinc-800" style="touch-action: pan-y;">
+                            <div id="trajSlides" class="flex transition-transform duration-400" style="transition-timing-function: ease;">
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-dubai.jpg" alt="Dubai depois do método" class="w-full aspect-square object-cover" loading="lazy">
+                                    <div class="absolute bottom-0 inset-x-0 bg-[#d4af37] text-black text-sm text-center py-2 font-semibold">🌍 Dubai — depois do método</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-uber.jpg" alt="Motorista de aplicativo" class="w-full aspect-square object-cover" loading="lazy">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🚗 Motorista de aplicativo</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-futebol.jpg" alt="Tentando ser jogador" class="w-full aspect-square object-cover" loading="lazy">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">⚽ Tentando ser jogador</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-pedreiro.jpg" alt="Bico de pedreiro" class="w-full aspect-square object-cover" loading="lazy">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🧱 Fazendo bico de pedreiro</div>
+                                </div>
+                                <div class="flex-none w-full relative">
+                                    <img src="/foto-aeroporto.jpg" alt="CLT no aeroporto" class="w-full aspect-square object-cover" loading="lazy">
+                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">✈️ CLT no aeroporto</div>
+                                </div>
+                            </div>
+                            <button onclick="trajGo(trajCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">‹</button>
+                            <button onclick="trajGo(trajCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">›</button>
+                        </div>
+                        <div id="trajDots" class="flex justify-center gap-2 mt-4">
+                            <button onclick="trajGo(0)" class="traj-dot w-2 h-2 rounded-full bg-[#d4af37]"></button>
+                            <button onclick="trajGo(1)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(2)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(3)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                            <button onclick="trajGo(4)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                        </div>
+                    </div>
+
+                    <p class="text-base text-zinc-300 leading-relaxed mb-4">
+                        <strong class="text-white">Matheus Muniz</strong> tem 28 anos. Já tentou ser jogador de futebol, já fez bico de ajudante de pedreiro, trabalhou como CLT no aeroporto, foi motorista de aplicativo… Tentou de tudo antes de encontrar o caminho certo.
+                    </p>
+                    <p class="text-base text-zinc-300 leading-relaxed mb-4">
+                        Hoje opera múltiplas contas no Mercado Livre e fatura todo mês de qualquer lugar do mundo. As fotos mostrando a sua trajetória, não é pra impressionar. Mas sim, mostrar que a liberdade geográfica não é papo de guru. É realidade de quem tem o método certo.
+                    </p>
+                    <p class="text-base text-zinc-300 leading-relaxed mb-10">
+                        Não criou o Código de Venda pra parecer especialista. Criou porque viu pessoas iguais a ele — <em>com vontade, mas sem direção</em> — tentando e desistindo por falta de método. Mais de 100 alunos já mudaram de vida com isso. Agora é a sua vez.
+                    </p>
+                    <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
+                        <span class="relative z-10 text-white font-semibold text-base">QUERO MUDAR A MINHA HISTÓRIA</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- GARANTIA -->
+            <section class="py-24 px-6">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bebas tracking-tight text-center mb-12">
+                        Duas garantias.<br><span class="text-[#fff200]">Zero risco pra você.</span>
+                    </h2>
+
+                    <!-- Garantia 1: 7 dias (legal) -->
+                    <div class="p-8 border border-white/10 bg-black rounded-2xl mb-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <iconify-icon icon="lucide:shield-check" class="w-8 h-8 text-[#d4af37] flex-shrink-0"></iconify-icon>
+                            <h3 class="text-xl font-bebas tracking-tight">Garantia de 7 dias</h3>
+                        </div>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Todo produto digital no Brasil tem, por lei, 7 dias de garantia. Se o curso for diferente do que foi apresentado a você, é só pedir o reembolso — sem burocracia, 100% do seu dinheiro de volta.
+                        </p>
+                    </div>
+
+                    <!-- Garantia 2: 30 dias triplicado -->
+                    <div class="relative p-8 border-2 border-[#d4af37] bg-gradient-to-b from-[#d4af37]/10 to-transparent rounded-2xl">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full">Exclusiva</div>
+                        <div class="flex items-center gap-3 mb-4 mt-2">
+                            <iconify-icon icon="lucide:gem" class="w-8 h-8 text-[#fff200] flex-shrink-0"></iconify-icon>
+                            <h3 class="text-xl font-bebas tracking-tight">Garantia de 30 dias — <span class="text-[#fff200]">TRIPLICADA</span></h3>
+                        </div>
+                        <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+                            Sei que 7 dias não são suficientes pra você comprovar que um método funciona de verdade. Por isso vou além do que qualquer curso oferece: se em 30 dias você aplicar tudo certinho, comprovar que seguiu o método da forma correta e mesmo assim não tiver nenhum resultado, eu devolvo todo o seu dinheiro <strong class="text-[#fff200]">TRIPLICADO</strong>.
+                        </p>
+                        <p class="text-sm text-zinc-400 leading-relaxed">
+                            Pelo seu tempo perdido. E pela confiança que você depositou em mim.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section class="py-24 px-6">
+                <div class="max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bebas tracking-tight text-center mb-12">
+                        Perguntas <span class="text-[#fff200]">frequentes</span>
+                    </h2>
+                    <div class="space-y-3" id="faqList">
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">Preciso ter experiência com Mercado Livre pra começar?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                Não. O curso foi feito pra quem está começando do zero. Cada etapa é explicada de forma prática, sem pressupor que você já conhece a plataforma.
+                            </div>
+                        </div>
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">Preciso de muito dinheiro pra começar a vender?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                Não. Teve aluno que começou com R$50 e já está tendo resultados expressivos. O curso te mostra como escolher produtos validados e uma operação enxuta, sem precisar investir alto antes de ter os primeiros resultados.
+                            </div>
+                        </div>
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">Em quanto tempo eu vejo resultado?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                Isso varia de pessoa pra pessoa, depende do quanto você aplica o método. Teve aluno que assistiu, aplicou certinho e fez a primeira venda em 2 dias — o curso é bem prático e aplicável, o importante é seguir o passo a passo sem pular etapas.
+                            </div>
+                        </div>
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">O curso é ao vivo ou gravado?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                É gravado, com acesso vitalício. Você assiste no seu tempo, no seu ritmo, e pode rever quantas vezes precisar.
+                            </div>
+                        </div>
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">E se eu não gostar do curso?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                Você tem 7 dias de garantia padrão. E se aplicar tudo certinho por 30 dias e mesmo assim não tiver resultado, devolvo seu dinheiro triplicado. Veja os detalhes na seção de garantia acima.
+                            </div>
+                        </div>
+                        <div class="faq-item border border-white/10 rounded-xl bg-black overflow-hidden">
+                            <button class="faq-toggle w-full text-left px-6 py-5 flex items-center justify-between gap-4">
+                                <span class="font-semibold text-white">Funciona pra qualquer estado do Brasil?</span>
+                                <iconify-icon icon="lucide:chevron-down" class="w-5 h-5 text-[#d4af37] flex-shrink-0 faq-icon"></iconify-icon>
+                            </button>
+                            <div class="faq-content px-6 pb-5 text-sm text-zinc-400" style="display:none;">
+                                Sim. O Mercado Livre atende todo o Brasil, e o método funciona independente de onde você mora.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA FINAL -->
+            <section class="py-24 px-6">
+                <div class="max-w-lg mx-auto text-center">
+                    <h2 class="text-3xl md:text-4xl font-bebas tracking-tight mb-6 leading-[1.1]">
+                        Daqui a três meses você pode estar <span class="text-white">no mesmo lugar.</span> Ou em um<br><span class="text-[#fff200]">completamente diferente.</span>
+                    </h2>
+                    <p class="text-zinc-400 mb-10">A escolha é sua. O método já existe. A única variável é: você vai agir ou vai esperar mais um mês igual ao último?</p>
+
+                    <div class="relative p-10 border border-[#d4af37]/40 bg-zinc-900/40 shadow-[0_0_40px_rgba(212,175,55,0.12)] rounded-2xl text-center mb-10">
+                        <div class="text-sm text-zinc-500 price-strike mb-1">De R$ 297,00</div>
+                        <div class="text-6xl font-bebas text-white mb-1">R$67</div>
+                        <p class="text-xs text-zinc-500 mb-8">ou 10x de R$ 8,05 sem juros</p>
+                        <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta">
+                            <span class="relative z-10 text-white font-semibold text-base">É AGORA</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-3">
+                        <div class="text-center"><iconify-icon icon="lucide:lock" class="w-6 h-6 text-[#d4af37] mb-2"></iconify-icon><div class="text-xs text-zinc-400">Pagamento<br>Seguro</div></div>
+                        <div class="text-center"><iconify-icon icon="lucide:shield-check" class="w-6 h-6 text-[#d4af37] mb-2"></iconify-icon><div class="text-xs text-zinc-400">7 dias de<br>Garantia</div></div>
+                        <div class="text-center"><iconify-icon icon="lucide:zap" class="w-6 h-6 text-[#d4af37] mb-2"></iconify-icon><div class="text-xs text-zinc-400">Acesso<br>Imediato</div></div>
+                        <div class="text-center"><iconify-icon icon="lucide:smartphone" class="w-6 h-6 text-[#d4af37] mb-2"></iconify-icon><div class="text-xs text-zinc-400">Funciona no<br>Celular</div></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-black border-t border-zinc-900 pt-16 pb-8 relative overflow-hidden">
+            <div class="max-w-3xl mx-auto px-6 text-center relative z-10 mb-8">
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <div class="w-4 h-4 bg-[#d4af37] rounded-sm rotate-45"></div>
+                    <span class="text-lg font-bold font-bebas tracking-wide">CÓDIGO DE VENDA</span>
+                </div>
+                <p class="text-zinc-500 text-sm">Matheus Muniz</p>
+                <p class="text-zinc-600 text-xs mt-4">© 2026 Código de Venda. Todos os direitos reservados.<br>Este produto é vendido pela plataforma Kiwify. Ao adquirir, você concorda com os termos de uso.</p>
+            </div>
+            <div class="flex justify-center items-center py-6 opacity-10 pointer-events-none">
+                <h1 class="text-[13vw] leading-none font-bold font-bebas tracking-tighter text-stroke select-none">CÓDIGO DE VENDA</h1>
+            </div>
+        </footer>
+    </div>
+<script>
+(function(){
+  window.trajCur = 0;
+  var total = 5;
+  window.trajGo = function(n){
+    trajCur = ((n % total) + total) % total;
+    var slides = document.getElementById('trajSlides');
+    if(!slides) return;
+    slides.style.transform = 'translateX(-' + (trajCur*100) + '%)';
+    document.querySelectorAll('.traj-dot').forEach(function(d,i){
+      d.classList.toggle('bg-[#d4af37]', i===trajCur);
+      d.classList.toggle('bg-zinc-700', i!==trajCur);
+    });
+  };
+  window.addEventListener('DOMContentLoaded', function(){
+    var c = document.getElementById('trajCarousel');
+    if(!c) return;
+    var startX = 0, moved = false;
+    c.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; moved=false; }, {passive:true});
+    c.addEventListener('touchmove', function(){ moved=true; }, {passive:true});
+    c.addEventListener('touchend', function(e){
+      if(!moved) return;
+      var dx = startX - e.changedTouches[0].clientX;
+      if(Math.abs(dx) > 40) trajGo(trajCur + (dx>0?1:-1));
+    }, {passive:true});
+  });
+  window.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.faq-toggle').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var item = btn.closest('.faq-item');
+        var content = item.querySelector('.faq-content');
+        var icon = item.querySelector('.faq-icon');
+        var isOpen = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
