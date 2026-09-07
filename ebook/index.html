@@ -92,7 +92,7 @@
                     </h1>
 
                     <p class="text-base text-zinc-300 leading-relaxed mb-8 animate-fade-up" style="animation-delay: 0.3s;">
-                        O guia prático e aplicável pra você<br><strong class="text-white">começar do zero</strong> e vender todo santo dia no Mercado Livre. O mesmo método que uso há mais de 5 anos.
+                        O guia prático e aplicável pra você<br><strong class="text-white">começar do zero</strong> e vender todo santo dia no Mercado Livre. Sem galpão, sem funcionários e sem precisar investir alto. O mesmo método que uso há mais de 5 anos.
                     </p>
 
                     <a href="https://pay.kiwify.com.br/Jsn2bOZ" id="hero-cta" class="shiny-cta">
@@ -172,10 +172,10 @@
                 <div class="max-w-lg mx-auto">
                     <p class="text-center text-xs uppercase tracking-widest text-zinc-500 mb-6">📲 Prints reais do grupo de alunos</p>
                     <div class="relative">
-                        <button type="button" id="provaPrev" aria-label="Ver anterior" class="absolute -left-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/80 border border-[#d4af37]/50 flex items-center justify-center text-[#d4af37] active:scale-90 transition">
+                        <button type="button" id="provaPrev" aria-label="Ver anterior" class="absolute left-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black border border-[#d4af37] shadow-lg flex items-center justify-center text-[#d4af37] active:scale-90 transition">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m15 18-6-6 6-6"/></svg>
                         </button>
-                        <button type="button" id="provaNext" aria-label="Ver próxima" class="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/80 border border-[#d4af37]/50 flex items-center justify-center text-[#d4af37] active:scale-90 transition">
+                        <button type="button" id="provaNext" aria-label="Ver próxima" class="absolute right-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black border border-[#d4af37] shadow-lg flex items-center justify-center text-[#d4af37] active:scale-90 transition">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m9 18 6-6-6-6"/></svg>
                         </button>
                         <div id="provaCarousel" class="prova-carousel flex overflow-x-auto gap-4 pb-4 px-1" style="scrollbar-width: none;">
@@ -207,33 +207,42 @@
                     ];
 
                     const CLONE_COUNT = 3;
-                    const makeImg = (item) => {
+                    const makeImg = (item, eager) => {
                         const el = document.createElement('img');
                         el.src = item.src;
                         el.alt = item.alt;
-                        el.loading = 'lazy';
+                        if (!eager) el.loading = 'lazy';
                         el.className = 'flex-none w-[220px] rounded-xl border border-zinc-800';
                         return el;
                     };
 
-                    const startClones = imgs.slice(-CLONE_COUNT).map(makeImg);
-                    const realItems = imgs.map(makeImg);
-                    const endClones = imgs.slice(0, CLONE_COUNT).map(makeImg);
+                    const startClones = imgs.slice(-CLONE_COUNT).map((it) => makeImg(it, true));
+                    const realItems = imgs.map((it) => makeImg(it, true));
+                    const endClones = imgs.slice(0, CLONE_COUNT).map((it) => makeImg(it, false));
                     [...startClones, ...realItems, ...endClones].forEach(el => track.appendChild(el));
 
                     let itemWidth = 0;
-                    let gap = 0;
+                    const GAP = 16; // gap-4
                     function measure() {
                         const first = track.children[0];
-                        gap = 16; // gap-4
-                        itemWidth = first.getBoundingClientRect().width + gap;
-                        track.scrollLeft = itemWidth * CLONE_COUNT;
+                        if (!first) return;
+                        const w = first.getBoundingClientRect().width;
+                        if (w > 0) {
+                            itemWidth = w + GAP;
+                            track.scrollLeft = itemWidth * CLONE_COUNT;
+                        }
                     }
+                    measure();
+                    requestAnimationFrame(measure);
+                    setTimeout(measure, 100);
+                    setTimeout(measure, 400);
                     window.addEventListener('load', measure);
                     window.addEventListener('resize', measure);
-                    setTimeout(measure, 50);
+                    const firstImg = track.children[0];
+                    if (firstImg) firstImg.addEventListener('load', measure);
 
                     function scrollByOne(dir) {
+                        if (!itemWidth) measure();
                         track.scrollBy({ left: dir * itemWidth, behavior: 'smooth' });
                     }
                     nextBtn.addEventListener('click', () => scrollByOne(1));
@@ -241,14 +250,15 @@
 
                     let settleTimeout;
                     track.addEventListener('scroll', () => {
+                        if (!itemWidth) return;
                         clearTimeout(settleTimeout);
                         settleTimeout = setTimeout(() => {
                             const total = imgs.length;
-                            const maxScroll = itemWidth * (total + CLONE_COUNT);
+                            const maxScroll = itemWidth * (total + CLONE_COUNT) - 1;
                             const minScroll = itemWidth * CLONE_COUNT;
                             if (track.scrollLeft >= maxScroll) {
                                 track.scrollLeft = track.scrollLeft - itemWidth * total;
-                            } else if (track.scrollLeft < minScroll - itemWidth) {
+                            } else if (track.scrollLeft < minScroll - itemWidth / 2) {
                                 track.scrollLeft = track.scrollLeft + itemWidth * total;
                             }
                         }, 120);
