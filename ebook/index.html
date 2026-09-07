@@ -9,25 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-
-    <!-- Meta Pixel -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '620111041129076');
-    fbq('track', 'PageView');
-    fbq('track', 'ViewContent', {content_name: 'Ebook Como Vender Muito no ML', value: 27.00, currency: 'BRL'});
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=620111041129076&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel -->
+    <link rel="preload" as="image" href="/ebook/capa-ebook.jpg" fetchpriority="high">
 
     <style>
         :root { --accent-gold: #d4af37; --accent-yellow: #fff200; }
@@ -147,10 +129,10 @@
                     </h2>
 
                     <div style="position: relative; width: 100%; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden; border: 1px solid #27272a; margin-bottom: 2rem; background:#000;">
-                        <img src="/ebook/assets/quemteensina_1.jpg" alt="Print real de faturamento no Mercado Turbo" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; transition: opacity 1s ease;">
-                        <img src="/ebook/assets/quemteensina_2.jpg" alt="Print real de vendas ao vivo" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition: opacity 1s ease;">
-                        <img src="/ebook/assets/quemteensina_3.jpg" alt="Print real de faturamento mensal" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
-                        <img src="/ebook/assets/quemteensina_4.jpg" alt="Foto real de etiquetas de envio impressas" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
+                        <img src="/ebook/assets/quemteensina_1.jpg" alt="Print real de faturamento no Mercado Turbo" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; transition: opacity 1s ease;" loading="eager">
+                        <img src="/ebook/assets/quemteensina_2.jpg" alt="Print real de vendas ao vivo" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition: opacity 1s ease;" loading="lazy">
+                        <img src="/ebook/assets/quemteensina_3.jpg" alt="Print real de faturamento mensal" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;" loading="lazy">
+                        <img src="/ebook/assets/quemteensina_4.jpg" alt="Foto real de etiquetas de envio impressas" class="prova-slide" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;" loading="lazy">
                         <div style="position:absolute; left:0; right:0; bottom:0; padding:14px 16px; background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);">
                             <span style="color:#a1a1aa; font-size:11px; letter-spacing:0.05em;">● OPERAÇÃO ML · RESULTADOS REAIS</span>
                         </div>
@@ -508,5 +490,23 @@
     });
   });
 </script>
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '620111041129076');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', {content_name: 'Ebook Como Vender Muito no ML', value: 27.00, currency: 'BRL'});
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=620111041129076&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel -->
 </body>
 </html>
