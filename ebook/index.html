@@ -237,12 +237,13 @@
                     }
 
                     let lastTs = null;
+                    let inView = false;
                     const SPEED = 40; // px por segundo
                     function tick(ts) {
                         if (lastTs === null) lastTs = ts;
                         const dt = (ts - lastTs) / 1000;
                         lastTs = ts;
-                        if (!paused && !dragging && singleSetWidth > 0) {
+                        if (!paused && !dragging && inView && singleSetWidth > 0) {
                             pos += SPEED * dt;
                             applyPos();
                         }
@@ -257,6 +258,16 @@
                     window.addEventListener('resize', measure);
                     setTimeout(measure, 100);
                     setTimeout(measure, 500);
+
+                    if ('IntersectionObserver' in window) {
+                        const io = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => { inView = entry.isIntersecting; });
+                        }, { threshold: 0.1 });
+                        io.observe(viewport);
+                    } else {
+                        inView = true; // fallback para navegadores sem suporte
+                    }
+
                     init();
 
                     function stepSize() {
