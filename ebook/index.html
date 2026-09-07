@@ -171,14 +171,26 @@
             <section class="py-16 px-6">
                 <div class="max-w-lg mx-auto">
                     <p class="text-center text-xs uppercase tracking-widest text-zinc-500 mb-6">📲 Prints reais do grupo de alunos</p>
-                    <div class="relative">
-                        <button type="button" id="provaPrev" aria-label="Ver anterior" class="absolute left-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black border border-[#d4af37] shadow-lg flex items-center justify-center text-[#d4af37] active:scale-90 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m15 18-6-6 6-6"/></svg>
+                    <div style="position: relative;">
+                        <button type="button" id="provaPrev" aria-label="Ver anterior" style="position: absolute; left: 4px; top: 50%; transform: translateY(-50%); z-index: 50; width: 36px; height: 36px; border-radius: 9999px; background: #000; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="m15 18-6-6 6-6"/></svg>
                         </button>
-                        <button type="button" id="provaNext" aria-label="Ver próxima" class="absolute right-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 rounded-full bg-black border border-[#d4af37] shadow-lg flex items-center justify-center text-[#d4af37] active:scale-90 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m9 18 6-6-6-6"/></svg>
+                        <button type="button" id="provaNext" aria-label="Ver próxima" style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%); z-index: 50; width: 36px; height: 36px; border-radius: 9999px; background: #000; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="m9 18 6-6-6-6"/></svg>
                         </button>
-                        <div id="provaCarousel" class="prova-carousel flex overflow-x-auto gap-4 pb-4 px-1" style="scrollbar-width: none;">
+                        <div id="provaCarousel" class="prova-carousel" style="display:flex; overflow-x:auto; gap:16px; padding:4px 4px 16px 4px; scroll-snap-type:x mandatory; scrollbar-width:none;">
+                            <img src="/ebook/assets/prova_ebook_1.jpg" alt="Print real de faturamento no Mercado Livre" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="eager">
+                            <img src="/ebook/assets/prova_ebook_2.jpg" alt="Print real de envios despachados" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_3.jpg" alt="Print real de pacotes preparados para envio" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_4.jpg" alt="Print real de reputação Mercado Livre" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_5.jpg" alt="Depoimento real de aluno da mentoria" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_6.jpg" alt="Print real do Mercado Turbo com estatísticas de vendas" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_7.jpg" alt="Depoimento real de aluna sobre primeira venda" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_8.jpg" alt="Depoimento real de aluno agradecendo a mentoria" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_9.jpg" alt="Print real de faturamento mensal no Mercado Livre" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_10.jpg" alt="Print real de dinheiro em espécie recebido de vendas" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_11.jpg" alt="Print real de pacotes prontos para envio" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
+                            <img src="/ebook/assets/prova_ebook_12.jpg" alt="Print real de mensagens do grupo de mentoria" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a; scroll-snap-align:center;" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -189,79 +201,46 @@
                     const track = document.getElementById('provaCarousel');
                     const prevBtn = document.getElementById('provaPrev');
                     const nextBtn = document.getElementById('provaNext');
-                    if (!track) return;
+                    if (!track || !prevBtn || !nextBtn) return;
 
-                    const imgs = [
-                        { src: '/ebook/assets/prova_ebook_1.jpg', alt: 'Print real de faturamento no Mercado Livre' },
-                        { src: '/ebook/assets/prova_ebook_2.jpg', alt: 'Print real de envios despachados' },
-                        { src: '/ebook/assets/prova_ebook_3.jpg', alt: 'Print real de pacotes preparados para envio' },
-                        { src: '/ebook/assets/prova_ebook_4.jpg', alt: 'Print real de reputação Mercado Livre' },
-                        { src: '/ebook/assets/prova_ebook_5.jpg', alt: 'Depoimento real de aluno da mentoria' },
-                        { src: '/ebook/assets/prova_ebook_6.jpg', alt: 'Print real do Mercado Turbo com estatísticas de vendas' },
-                        { src: '/ebook/assets/prova_ebook_7.jpg', alt: 'Depoimento real de aluna sobre primeira venda' },
-                        { src: '/ebook/assets/prova_ebook_8.jpg', alt: 'Depoimento real de aluno agradecendo a mentoria' },
-                        { src: '/ebook/assets/prova_ebook_9.jpg', alt: 'Print real de faturamento mensal no Mercado Livre' },
-                        { src: '/ebook/assets/prova_ebook_10.jpg', alt: 'Print real de dinheiro em espécie recebido de vendas' },
-                        { src: '/ebook/assets/prova_ebook_11.jpg', alt: 'Print real de pacotes prontos para envio' },
-                        { src: '/ebook/assets/prova_ebook_12.jpg', alt: 'Print real de mensagens do grupo de mentoria' }
-                    ];
+                    function step() {
+                        const first = track.querySelector('img');
+                        if (!first) return 220;
+                        return first.getBoundingClientRect().width + 16;
+                    }
 
-                    const CLONE_COUNT = 3;
-                    const makeImg = (item, eager) => {
-                        const el = document.createElement('img');
-                        el.src = item.src;
-                        el.alt = item.alt;
-                        if (!eager) el.loading = 'lazy';
-                        el.className = 'flex-none w-[220px] rounded-xl border border-zinc-800';
-                        return el;
-                    };
+                    function isAtStart() {
+                        return track.scrollLeft <= 4;
+                    }
+                    function isAtEnd() {
+                        return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+                    }
 
-                    const startClones = imgs.slice(-CLONE_COUNT).map((it) => makeImg(it, true));
-                    const realItems = imgs.map((it) => makeImg(it, true));
-                    const endClones = imgs.slice(0, CLONE_COUNT).map((it) => makeImg(it, false));
-                    [...startClones, ...realItems, ...endClones].forEach(el => track.appendChild(el));
-
-                    let itemWidth = 0;
-                    const GAP = 16; // gap-4
-                    function measure() {
-                        const first = track.children[0];
-                        if (!first) return;
-                        const w = first.getBoundingClientRect().width;
-                        if (w > 0) {
-                            itemWidth = w + GAP;
-                            track.scrollLeft = itemWidth * CLONE_COUNT;
+                    nextBtn.addEventListener('click', () => {
+                        if (isAtEnd()) {
+                            track.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            track.scrollBy({ left: step(), behavior: 'smooth' });
                         }
-                    }
-                    measure();
-                    requestAnimationFrame(measure);
-                    setTimeout(measure, 100);
-                    setTimeout(measure, 400);
-                    window.addEventListener('load', measure);
-                    window.addEventListener('resize', measure);
-                    const firstImg = track.children[0];
-                    if (firstImg) firstImg.addEventListener('load', measure);
+                    });
 
-                    function scrollByOne(dir) {
-                        if (!itemWidth) measure();
-                        track.scrollBy({ left: dir * itemWidth, behavior: 'smooth' });
-                    }
-                    nextBtn.addEventListener('click', () => scrollByOne(1));
-                    prevBtn.addEventListener('click', () => scrollByOne(-1));
+                    prevBtn.addEventListener('click', () => {
+                        if (isAtStart()) {
+                            track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+                        } else {
+                            track.scrollBy({ left: -step(), behavior: 'smooth' });
+                        }
+                    });
 
-                    let settleTimeout;
+                    // ao deslizar manualmente e soltar no final/início, também permite continuar de forma cíclica
+                    let touchEndTimeout;
                     track.addEventListener('scroll', () => {
-                        if (!itemWidth) return;
-                        clearTimeout(settleTimeout);
-                        settleTimeout = setTimeout(() => {
-                            const total = imgs.length;
-                            const maxScroll = itemWidth * (total + CLONE_COUNT) - 1;
-                            const minScroll = itemWidth * CLONE_COUNT;
-                            if (track.scrollLeft >= maxScroll) {
-                                track.scrollLeft = track.scrollLeft - itemWidth * total;
-                            } else if (track.scrollLeft < minScroll - itemWidth / 2) {
-                                track.scrollLeft = track.scrollLeft + itemWidth * total;
+                        clearTimeout(touchEndTimeout);
+                        touchEndTimeout = setTimeout(() => {
+                            if (isAtEnd()) {
+                                // pequena pausa antes de permitir novo ciclo ao tocar novamente
                             }
-                        }, 120);
+                        }, 150);
                     });
                 })();
             </script>
