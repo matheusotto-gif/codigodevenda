@@ -8,7 +8,19 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <script>
+    function loadWebFonts() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap';
+        document.head.appendChild(link);
+    }
+    if (document.readyState === 'complete') {
+        loadWebFonts();
+    } else {
+        window.addEventListener('load', loadWebFonts);
+    }
+    </script>
     <style>
         :root { --accent-gold: #d4af37; --accent-yellow: #fff200; }
         @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -68,7 +80,7 @@
                 </div>
                 <div class="relative z-10 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div class="text-center md:text-left">
-                        <img src="/assets/logo-ml.png" alt="Mercado Livre" class="w-24 mx-auto md:mx-0 mb-6 animate-fade-up" style="animation-delay: 0.1s;">
+                        <img src="/assets/logo-ml.png" alt="Mercado Livre" class="w-24 mx-auto md:mx-0 mb-6" fetchpriority="high">
                         <h1 class="text-4xl md:text-6xl font-bebas tracking-tight leading-[1.1] mb-6 animate-fade-up" style="animation-delay: 0.2s;">
                             <span class="block text-white">Construa uma operação no</span>
                             <span class="block text-[#fff200]">MERCADO LIVRE</span>
@@ -217,14 +229,138 @@
                     </div>
 
                     <p class="text-center text-xs uppercase tracking-widest text-zinc-500 mt-16 mb-6">📲 Prints reais do grupo de alunos</p>
-                    <div class="prova-carousel flex overflow-x-auto gap-4 pb-4 px-1" style="scroll-snap-type: x mandatory; scrollbar-width: none;">
-                        <img src="/assets/prova1.jpg" alt="Prova real aluno 1" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
-                        <img src="/assets/prova2.jpg" alt="Prova real aluno 2" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
-                        <img src="/assets/prova3.jpg" alt="Prova real aluno 3" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
-                        <img src="/assets/prova4.jpg" alt="Prova real aluno 4" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
-                        <img src="/assets/prova5.jpg" alt="Prova real aluno 5" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
-                        <img src="/assets/prova6.jpg" alt="Prova real aluno 6" class="flex-none w-[220px] rounded-xl border border-zinc-800" style="scroll-snap-align: start;" loading="lazy">
+                    <div style="position: relative;">
+                        <button type="button" id="provaPrev" aria-label="Ver anterior" style="position: absolute; left: 4px; top: 50%; transform: translateY(-50%); z-index: 50; width: 36px; height: 36px; border-radius: 9999px; background: #000; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="m15 18-6-6 6-6"/></svg>
+                        </button>
+                        <button type="button" id="provaNext" aria-label="Ver próxima" style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%); z-index: 50; width: 36px; height: 36px; border-radius: 9999px; background: #000; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                        <div id="provaViewport" style="overflow:hidden; width:100%;">
+                            <div id="provaCarousel" style="display:flex; gap:16px; width:max-content; will-change: transform;">
+                                <img src="/assets/prova1.jpg" alt="Prova real aluno 1" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="eager">
+                                <img src="/assets/prova2.jpg" alt="Prova real aluno 2" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="lazy">
+                                <img src="/assets/prova3.jpg" alt="Prova real aluno 3" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="lazy">
+                                <img src="/assets/prova4.jpg" alt="Prova real aluno 4" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="lazy">
+                                <img src="/assets/prova5.jpg" alt="Prova real aluno 5" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="lazy">
+                                <img src="/assets/prova6.jpg" alt="Prova real aluno 6" style="flex:0 0 auto; width:220px; border-radius:12px; border:1px solid #27272a;" loading="lazy">
+                            </div>
+                        </div>
                     </div>
+
+                    <script>
+                        (function () {
+                            const viewport = document.getElementById('provaViewport');
+                            const track = document.getElementById('provaCarousel');
+                            const prevBtn = document.getElementById('provaPrev');
+                            const nextBtn = document.getElementById('provaNext');
+                            if (!viewport || !track || !prevBtn || !nextBtn) return;
+
+                            const originalHTML = track.innerHTML;
+                            track.innerHTML = originalHTML + originalHTML;
+
+                            const GAP = 16;
+                            let singleSetWidth = 0;
+                            let pos = 0;
+                            let paused = false;
+                            let dragging = false;
+                            let dragStartX = 0;
+                            let dragStartPos = 0;
+
+                            function measure() {
+                                const imgs = track.querySelectorAll('img');
+                                const half = imgs.length / 2;
+                                let w = 0;
+                                for (let i = 0; i < half; i++) {
+                                    w += imgs[i].getBoundingClientRect().width + GAP;
+                                }
+                                singleSetWidth = w;
+                            }
+
+                            function applyPos() {
+                                if (singleSetWidth > 0) {
+                                    if (pos < 0) pos += singleSetWidth;
+                                    if (pos >= singleSetWidth) pos -= singleSetWidth;
+                                }
+                                track.style.transform = 'translateX(' + (-pos) + 'px)';
+                            }
+
+                            let lastTs = null;
+                            let inView = false;
+                            const SPEED = 40;
+                            function tick(ts) {
+                                if (lastTs === null) lastTs = ts;
+                                const dt = (ts - lastTs) / 1000;
+                                lastTs = ts;
+                                if (!paused && !dragging && inView && singleSetWidth > 0) {
+                                    pos += SPEED * dt;
+                                    applyPos();
+                                }
+                                requestAnimationFrame(tick);
+                            }
+
+                            function init() {
+                                measure();
+                                requestAnimationFrame(tick);
+                            }
+                            window.addEventListener('load', measure);
+                            window.addEventListener('resize', measure);
+                            setTimeout(measure, 100);
+                            setTimeout(measure, 500);
+
+                            if ('IntersectionObserver' in window) {
+                                const io = new IntersectionObserver((entries) => {
+                                    entries.forEach(entry => { inView = entry.isIntersecting; });
+                                }, { threshold: 0.1 });
+                                io.observe(viewport);
+                            } else {
+                                inView = true;
+                            }
+
+                            init();
+
+                            function stepSize() {
+                                const first = track.querySelector('img');
+                                return first ? first.getBoundingClientRect().width + GAP : 220 + GAP;
+                            }
+
+                            nextBtn.addEventListener('click', () => { pos += stepSize(); applyPos(); });
+                            prevBtn.addEventListener('click', () => { pos -= stepSize(); applyPos(); });
+
+                            let resumeTimeout;
+                            function pauseTemporarily() {
+                                paused = true;
+                                clearTimeout(resumeTimeout);
+                                resumeTimeout = setTimeout(() => { paused = false; }, 2500);
+                            }
+                            viewport.addEventListener('mouseenter', () => { paused = true; });
+                            viewport.addEventListener('mouseleave', () => { paused = false; });
+                            [prevBtn, nextBtn].forEach(btn => btn.addEventListener('click', pauseTemporarily));
+
+                            function onDragStart(clientX) {
+                                dragging = true;
+                                dragStartX = clientX;
+                                dragStartPos = pos;
+                            }
+                            function onDragMove(clientX) {
+                                if (!dragging) return;
+                                const delta = clientX - dragStartX;
+                                pos = dragStartPos - delta;
+                                applyPos();
+                            }
+                            function onDragEnd() {
+                                if (!dragging) return;
+                                dragging = false;
+                                pauseTemporarily();
+                            }
+                            viewport.addEventListener('touchstart', (e) => onDragStart(e.touches[0].clientX), { passive: true });
+                            viewport.addEventListener('touchmove', (e) => onDragMove(e.touches[0].clientX), { passive: true });
+                            viewport.addEventListener('touchend', onDragEnd);
+                            viewport.addEventListener('mousedown', (e) => onDragStart(e.clientX));
+                            window.addEventListener('mousemove', (e) => onDragMove(e.clientX));
+                            window.addEventListener('mouseup', onDragEnd);
+                        })();
+                    </script>
 
                     <div class="text-center mt-12">
                         <a href="https://pay.kiwify.com.br/1zbCsA8" class="shiny-cta max-w-sm mx-auto">
@@ -474,6 +610,35 @@
       d.classList.toggle('bg-zinc-700', i!==trajCur);
     });
   };
+  var trajAutoTimer = null;
+  var trajPaused = false;
+  function trajAutoStep(){
+    if (!trajPaused) { trajGo(trajCur + 1); }
+  }
+  function trajPauseTemporarily(){
+    trajPaused = true;
+    clearTimeout(trajAutoTimer._resume);
+    trajAutoTimer._resume = setTimeout(function(){ trajPaused = false; }, 4000);
+  }
+  window.addEventListener('DOMContentLoaded', function(){
+    var c = document.getElementById('trajCarousel');
+    if (!c) return;
+    if ('IntersectionObserver' in window) {
+      var trajInView = false;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){ trajInView = entry.isIntersecting; });
+      }, { threshold: 0.2 });
+      io.observe(c);
+      trajAutoTimer = setInterval(function(){ if (trajInView) trajAutoStep(); }, 2800);
+    } else {
+      trajAutoTimer = setInterval(trajAutoStep, 2800);
+    }
+    c.addEventListener('mouseenter', function(){ trajPaused = true; });
+    c.addEventListener('mouseleave', function(){ trajPaused = false; });
+    document.querySelectorAll('.traj-dot, #trajCarousel button').forEach(function(btn){
+      btn.addEventListener('click', trajPauseTemporarily);
+    });
+  });
   window.addEventListener('DOMContentLoaded', function(){
     var c = document.getElementById('trajCarousel');
     if(!c) return;
@@ -483,7 +648,7 @@
     c.addEventListener('touchend', function(e){
       if(!moved) return;
       var dx = startX - e.changedTouches[0].clientX;
-      if(Math.abs(dx) > 40) trajGo(trajCur + (dx>0?1:-1));
+      if(Math.abs(dx) > 40) { trajGo(trajCur + (dx>0?1:-1)); trajPauseTemporarily(); }
     }, {passive:true});
   });
   window.addEventListener('DOMContentLoaded', function(){
