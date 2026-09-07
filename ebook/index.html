@@ -9,7 +9,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="image" href="/ebook/capa-ebook.webp" fetchpriority="high">
-    <!-- TESTE: fontes desativadas temporariamente -->
+    <script>
+    // Carrega Google Fonts de forma assíncrona, sem bloquear o render inicial
+    function loadWebFonts() {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap';
+        document.head.appendChild(link);
+    }
+    if (document.readyState === 'complete') {
+        loadWebFonts();
+    } else {
+        window.addEventListener('load', loadWebFonts);
+    }
+    </script>
 
     <style>
         :root { --accent-gold: #d4af37; --accent-yellow: #fff200; }
