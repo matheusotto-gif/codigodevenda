@@ -393,40 +393,30 @@
                     </h2>
 
                     <div class="max-w-sm mx-auto mb-10">
-                        <div id="trajCarousel" class="relative rounded-xl overflow-hidden border border-zinc-800" style="touch-action: pan-y;">
-                            <div id="trajSlides" class="flex transition-transform duration-400" style="transition-timing-function: ease;">
-                                <div class="flex-none w-full relative">
-                                    <img src="/foto-dubai.jpg" alt="Dubai depois do método" class="w-full aspect-square object-cover" loading="lazy">
-                                    <div class="absolute bottom-0 inset-x-0 bg-[#d4af37] text-black text-sm text-center py-2 font-semibold">🌍 Dubai — depois do método</div>
-                                </div>
-                                <div class="flex-none w-full relative">
-                                    <img src="/foto-uber.jpg" alt="Motorista de aplicativo" class="w-full aspect-square object-cover" loading="lazy">
-                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🚗 Motorista de aplicativo</div>
-                                </div>
-                                <div class="flex-none w-full relative">
-                                    <img src="/foto-futebol.jpg" alt="Tentando ser jogador" class="w-full aspect-square object-cover" loading="lazy">
-                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">⚽ Tentando ser jogador</div>
-                                </div>
-                                <div class="flex-none w-full relative">
-                                    <img src="/foto-pedreiro.jpg" alt="Bico de pedreiro" class="w-full aspect-square object-cover" loading="lazy">
-                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">🧱 Fazendo bico de pedreiro</div>
-                                </div>
-                                <div class="flex-none w-full relative">
-                                    <img src="/foto-aeroporto.jpg" alt="CLT no aeroporto" class="w-full aspect-square object-cover" loading="lazy">
-                                    <div class="absolute bottom-0 inset-x-0 bg-black/70 text-sm text-center py-2">✈️ CLT no aeroporto</div>
-                                </div>
-                            </div>
-                            <button onclick="trajGo(trajCur-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">‹</button>
-                            <button onclick="trajGo(trajCur+1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 rounded-full w-8 h-8 flex items-center justify-center text-white">›</button>
-                        </div>
-                        <div id="trajDots" class="flex justify-center gap-2 mt-4">
-                            <button onclick="trajGo(0)" class="traj-dot w-2 h-2 rounded-full bg-[#d4af37]"></button>
-                            <button onclick="trajGo(1)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
-                            <button onclick="trajGo(2)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
-                            <button onclick="trajGo(3)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
-                            <button onclick="trajGo(4)" class="traj-dot w-2 h-2 rounded-full bg-zinc-700"></button>
+                        <div style="position: relative; width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; border: 1px solid #27272a;">
+                            <img src="/foto-dubai.jpg" alt="Dubai depois do método" class="traj-slide" data-caption="🌍 Dubai — depois do método" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:1; transition: opacity 1s ease;">
+                            <img src="/foto-uber.jpg" alt="Motorista de aplicativo" class="traj-slide" data-caption="🚗 Motorista de aplicativo" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
+                            <img src="/foto-futebol.jpg" alt="Tentando ser jogador" class="traj-slide" data-caption="⚽ Tentando ser jogador" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
+                            <img src="/foto-pedreiro.jpg" alt="Bico de pedreiro" class="traj-slide" data-caption="🧱 Fazendo bico de pedreiro" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
+                            <img src="/foto-aeroporto.jpg" alt="CLT no aeroporto" class="traj-slide" data-caption="✈️ CLT no aeroporto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 1s ease;">
+                            <div id="trajCaption" class="absolute bottom-0 inset-x-0 bg-[#d4af37] text-black text-sm text-center py-2 font-semibold" style="position:absolute; left:0; right:0; bottom:0;">🌍 Dubai — depois do método</div>
                         </div>
                     </div>
+
+                    <script>
+                        (function () {
+                            const slides = document.querySelectorAll('.traj-slide');
+                            const caption = document.getElementById('trajCaption');
+                            if (!slides.length) return;
+                            let idx = 0;
+                            setInterval(() => {
+                                slides[idx].style.opacity = '0';
+                                idx = (idx + 1) % slides.length;
+                                slides[idx].style.opacity = '1';
+                                if (caption) caption.textContent = slides[idx].getAttribute('data-caption');
+                            }, 2800);
+                        })();
+                    </script>
 
                     <p class="text-base text-zinc-300 leading-relaxed mb-4">
                         <strong class="text-white">Matheus Muniz</strong> tem 28 anos. Já tentou ser jogador de futebol, já fez bico de ajudante de pedreiro, trabalhou como CLT no aeroporto, foi motorista de aplicativo… Tentou de tudo antes de encontrar o caminho certo.
@@ -586,59 +576,6 @@
     </div>
 <script>
 (function(){
-  window.trajCur = 0;
-  var total = 5;
-  window.trajGo = function(n){
-    trajCur = ((n % total) + total) % total;
-    var slides = document.getElementById('trajSlides');
-    if(!slides) return;
-    slides.style.transform = 'translateX(-' + (trajCur*100) + '%)';
-    document.querySelectorAll('.traj-dot').forEach(function(d,i){
-      d.classList.toggle('bg-[#d4af37]', i===trajCur);
-      d.classList.toggle('bg-zinc-700', i!==trajCur);
-    });
-  };
-  var trajAutoTimer = null;
-  var trajPaused = false;
-  function trajAutoStep(){
-    if (!trajPaused) { trajGo(trajCur + 1); }
-  }
-  function trajPauseTemporarily(){
-    trajPaused = true;
-    clearTimeout(trajAutoTimer._resume);
-    trajAutoTimer._resume = setTimeout(function(){ trajPaused = false; }, 4000);
-  }
-  window.addEventListener('DOMContentLoaded', function(){
-    var c = document.getElementById('trajCarousel');
-    if (!c) return;
-    if ('IntersectionObserver' in window) {
-      var trajInView = false;
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){ trajInView = entry.isIntersecting; });
-      }, { threshold: 0.2 });
-      io.observe(c);
-      trajAutoTimer = setInterval(function(){ if (trajInView) trajAutoStep(); }, 2800);
-    } else {
-      trajAutoTimer = setInterval(trajAutoStep, 2800);
-    }
-    c.addEventListener('mouseenter', function(){ trajPaused = true; });
-    c.addEventListener('mouseleave', function(){ trajPaused = false; });
-    document.querySelectorAll('.traj-dot, #trajCarousel button').forEach(function(btn){
-      btn.addEventListener('click', trajPauseTemporarily);
-    });
-  });
-  window.addEventListener('DOMContentLoaded', function(){
-    var c = document.getElementById('trajCarousel');
-    if(!c) return;
-    var startX = 0, moved = false;
-    c.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; moved=false; }, {passive:true});
-    c.addEventListener('touchmove', function(){ moved=true; }, {passive:true});
-    c.addEventListener('touchend', function(e){
-      if(!moved) return;
-      var dx = startX - e.changedTouches[0].clientX;
-      if(Math.abs(dx) > 40) { trajGo(trajCur + (dx>0?1:-1)); trajPauseTemporarily(); }
-    }, {passive:true});
-  });
   window.addEventListener('DOMContentLoaded', function(){
     document.querySelectorAll('.faq-toggle').forEach(function(btn){
       btn.addEventListener('click', function(){
