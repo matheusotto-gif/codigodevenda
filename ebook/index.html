@@ -539,5 +539,55 @@
     src="https://www.facebook.com/tr?id=620111041129076&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel -->
+
+<script>
+(function () {
+  const parametrosPermitidos = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_content',
+    'utm_term',
+    'src',
+    'sck',
+    's1',
+    's2',
+    's3'
+  ];
+
+  const parametrosOrigem = new URLSearchParams(
+    window.location.search
+  );
+
+  const idsDosBotoes = [
+    'hero-cta',
+    'offer-cta',
+    'sticky-cta-btn'
+  ];
+
+  idsDosBotoes.forEach(function (id) {
+    const botao = document.getElementById(id);
+
+    if (!botao || !botao.href) return;
+
+    const destino = new URL(botao.href);
+
+    if (!destino.hostname.endsWith('kiwify.com.br')) {
+      return;
+    }
+
+    parametrosPermitidos.forEach(function (parametro) {
+      const valor = parametrosOrigem.get(parametro);
+
+      if (valor) {
+        destino.searchParams.set(parametro, valor);
+      }
+    });
+
+    botao.href = destino.toString();
+  });
+})();
+</script>
+
 </body>
 </html>
